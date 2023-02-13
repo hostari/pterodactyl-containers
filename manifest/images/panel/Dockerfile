@@ -14,7 +14,7 @@ RUN \
 FROM base as build
 
 ARG VERSION
-ARG GIT_BRANCH=release/${VERSION}
+ARG GIT_BRANCH=develop
 
 ENV VERSION=${VERSION}
 
@@ -34,9 +34,8 @@ RUN \
     && chown -R nginx:nginx *;
 
 RUN \
-    yarn install --production \
-    && yarn add cross-env \
-    && yarn run build:production \
+    yarn install --frozen-lockfile \
+    && yarn run build \
     && rm -rf node_modules
 
 # Remove persistent data folders as they will be symlinked further down
